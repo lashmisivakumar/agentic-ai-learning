@@ -17,15 +17,18 @@ def battery():
     print("battery called")
 
 tools={"move":move,"turn":turn,"battery":battery}
+while True:
+    request=input("Enter your request: ")
+    if request=="quit":
+        break
+    else:
+        prompt=f"you are robot,tools:move,turn,battery.Reply with only the tool name that fits this request {request}"
+        response=client.models.generate_content(model="gemini-flash-latest",contents=prompt) 
 
-request=input("Enter your request: ")
-prompt=f"you are robot,tools:move,turn,battery.Reply with only the tool name that fits this request {request}"
-response=client.models.generate_content(model="gemini-flash-latest",contents=prompt) 
+        choice=response.text.strip()
+        print("AI chose: ",choice)
 
-choice=response.text.strip()
-print("AI chose: ",choice)
-
-if choice in tools:
-    tools[choice]()
-else:
-    print("sorry,i dont have a tool for that")
+        if choice in tools:
+            tools[choice]()
+        else:
+            print("sorry,i dont have a tool for that")
