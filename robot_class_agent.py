@@ -22,16 +22,18 @@ class Robot:
     def battery(self):
         print("battery called")
         print(f"Battery level is {self.battery_level} %")
+    def stop(self):
+        print("Robot stopped")
 
 r1=Robot("turtle",50)
 
-tools={"move":r1.move,"turn":r1.turn,"battery":r1.battery}
+tools={"move":r1.move,"turn":r1.turn,"battery":r1.battery,"stop":r1.stop}
 while True:
     request=input("Enter your request: ")
     if request=="quit":
         break
     else:
-        prompt=f"you are robot,tools:move,turn,battery.Reply with only the tool name that fits this request {request}"
+        prompt=f"you are robot,tools:move,turn,battery,stop.Reply with only the tool name that fits this request {request}"# here what are the function you want tocall you must mention that in prompt so that it will work
         try:
             response=client.models.generate_content(model="gemini-flash-latest",contents=prompt) 
 
